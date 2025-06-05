@@ -332,15 +332,15 @@ class ChatApplication:
             self.input_field.focus_set()
 
     def display_initial_message(self):
-        self.add_message_to_chat_immediately("Bot", "Chào bạn! Tôi là chatbot về Nguyên lý Ngôn ngữ Lập trình (PPL).", "bot_initial")
-        self.add_message_to_chat_immediately(None, "Vui lòng chọn một chủ đề bạn quan tâm:", "bot_instruction")
+        self.add_message_to_chat_immediately("Bot", "Hi! I'm the Principles of Programming Languages (PPL) chatbot.", "bot_initial")
+        self.add_message_to_chat_immediately(None, "Please select a topic that interests you:", "bot_instruction")
 
         for key_option, text_option_full in self.options_data.items():
             topic_name = text_option_full.split(":")[0].strip()
             self.add_message_to_chat_immediately(None, (key_option, topic_name), "bot_option")
 
-        self.add_message_to_chat_immediately(None, "\nBạn cũng có thể gõ 'chọn A', 'lấy B', v.v.", "bot_instruction")
-        self.add_message_to_chat_immediately(None, "Gõ 'thoát' để kết thúc.", "bot_instruction")
+        self.add_message_to_chat_immediately(None, "\nYou can also type 'pick A', 'get B', etc.", "bot_instruction")
+        self.add_message_to_chat_immediately(None, "Type 'exit' to finish.", "bot_instruction")
 
     def send_message(self):
         if self.bot_is_processing: return
@@ -352,9 +352,9 @@ class ChatApplication:
         self.input_field.delete(0, tk.END)
 
         if user_text.lower() in ['thoát', 'exit', 'quit']:
-            self._start_bot_processing("Tạm biệt! Hẹn gặp lại.")
+            self._start_bot_processing("Goodbye! See you again.")
           
-            self.master.after(self.THINKING_TIME_MS + len("Tạm biệt! Hẹn gặp lại.") * self.TYPING_SPEED_MS + 1000, self.master.destroy)
+            self.master.after(self.THINKING_TIME_MS + len("Goodbye! See you again.") * self.TYPING_SPEED_MS + 1000, self.master.destroy)
             return
 
         extracted_choice = self.get_choice_function(user_text)
@@ -363,9 +363,9 @@ class ChatApplication:
         if extracted_choice and extracted_choice in self.options_data:
             bot_response = self.options_data[extracted_choice]
         elif extracted_choice:
-            bot_response = f"Lựa chọn '{extracted_choice}' không có trong danh sách. Vui lòng chọn lại."
+            bot_response = f"The selection '{extracted_choice}' is not in the list. Please select again."
         else:
-            bot_response = "Tôi không hiểu lựa chọn của bạn. Vui lòng thử lại (ví dụ: 'A', 'chọn B')."
+            bot_response = "I don't understand your selection. Please try again (eg: 'A', 'choose B')."
         
         self._start_bot_processing(bot_response)
 
