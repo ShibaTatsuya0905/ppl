@@ -358,12 +358,13 @@ def process_nlp_input(user_input, knowledge_base_local, initial_options_local):
         intent = "ask_definition"
             
     if not topic_key:
-        # Check for letter/number based choices (A, B, 1, 2) using ANTLR
-        # This part assumes get_user_choice_antlr returns the direct letter/number choice.
-        raw_antlr_choice = get_user_choice_antlr(user_input_original=user_input) # Pass original case for ANTLR
+        # SỬA DÒNG NÀY:
+        # Bỏ "user_input_original=" và chỉ truyền giá trị của biến user_input
+        raw_antlr_choice = get_user_choice_antlr(user_input) # user_input ở đây là biến chứa input của người dùng đã được truyền vào process_nlp_input
+        
         if raw_antlr_choice and raw_antlr_choice in initial_options_local:
             topic_key = initial_options_local[raw_antlr_choice]
-            if not intent: # If only 'A' was typed, default to definition
+            if not intent: 
                 intent = "ask_definition"
             if topic_key not in extracted_entities: extracted_entities.append(topic_key)
 
